@@ -1,0 +1,4 @@
+---
+
+- name: restart nginx
+  shell: /usr/local/nginx/sbin/nginx  -s reload

@@ -1,0 +1,6 @@
+---
+
+dbname: masterslave
+dbuser: mysqlmaster
+dbuserpass: qwer12345
+mysql_port: 3306

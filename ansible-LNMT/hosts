@@ -1,0 +1,8 @@
+[nginx-server]
+172.17.0.6
+
+[dbserver]
+172.17.0.6
+
+[tomcat]
+172.17.0.6

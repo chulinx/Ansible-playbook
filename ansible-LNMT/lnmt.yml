@@ -1,0 +1,29 @@
+---
+- name: Install base for all host
+  hosts: all
+  remote_user: root
+  tags: base
+
+  roles:
+    - base
+
+- name: deploy mysql and configure Database
+  hosts: dbserver
+  remote_user: root
+
+  roles:
+    - ansible-mysql
+
+- name: deploy nginx and configure web
+  hosts: nginx-server
+  remote_user: root
+
+  roles:
+    - ansible-nginx
+
+- name: deploy tomcat and configure tomcat
+  hosts: tomcat
+  remote_user: root
+
+  roles:
+    - ansible-tomcat

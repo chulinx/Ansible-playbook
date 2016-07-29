@@ -1,0 +1,41 @@
+---
+
+- name: Base All Server
+  hosts: all
+  remote_user: root
+  tags: base
+
+  roles:
+    - base
+
+- name: Install mysql-master and configure mysqlmaster
+  hosts: mysql-master
+  remote_user: root
+  tags: mysql-master
+
+  roles:
+    - mysql-master
+
+- name: Install mysql-slave and start mysqlslave
+  hosts: mysql-slave
+  remote_user: root
+  tags: mysql-slave
+
+  roles:
+    - mysql-slave
+
+- name: Install Amoeba and configure
+  hosts: mysql-proxy
+  remote_user: root
+  tags: mysql-proxy
+
+  roles:
+    - amoeba
+
+- name: chnage mysql root pass
+  hosts: mysql-master,mysql-slave
+  remote_user: root
+  tags: chpass
+
+  roles:
+    - mysql-conf

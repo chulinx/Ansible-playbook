@@ -1,0 +1,8 @@
+---
+
+mysqluser: amoeba
+mysqlpass: mysql
+dbuser: mysqlmaster
+dbuserpass: 123456
+root_pass: mysql
+mycnf_pwd: /etc/my.cnf.d/server.cnf

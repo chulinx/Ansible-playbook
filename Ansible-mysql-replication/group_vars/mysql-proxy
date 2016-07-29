@@ -1,0 +1,23 @@
+---
+
+#amoeba.xml
+proxy_port: 8066
+proxy_user: root
+proxy_pass: mysql
+default_pool: master
+write_pool: master
+read_pool: vipdb
+master_dbname: master
+
+#dbServer.xml
+dbport: 3306
+default_db: test
+mysqluser: amoeba
+mysqlpass: mysql
+master_dbname: master
+master_ip: 172.17.0.2
+slave_dbname: slave
+slave_ip: 172.17.0.6
+virtual_pool: vipdb
+poolnames: slave
+amoeba_home: 

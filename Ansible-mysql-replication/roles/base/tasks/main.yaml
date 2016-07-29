@@ -1,0 +1,40 @@
+---
+
+- name: Copy Centos6&&Crntos7 EPEL
+  copy: src={{ item }} dest=/opt/
+  with_items:
+   - epel-release-6-8.noarch.rpm
+   - remi-release-6.rpm
+   - epel-release-latest-7.noarch.rpm
+
+- name: Install ELEP for Centos6
+  yum: name=/opt/{{ item }} state=installed
+  with_items:
+   - epel-release-6-8.noarch.rpm
+   - remi-release-6.rpm
+  when: ansible_distribution_major_version == "6"
+
+- name: Install ELEP for Centos6
+  yum: name=/opt/epel-release-latest-7.noarch.rpm state=installed
+  when: ansible_distribution_major_version == "7"
+
+- name: Install MariaDB package
+  yum: name={{ item }} state=installed
+  with_items:
+    - mariadb-server
+    - mysql
+    - MySQL-python
+
+- name: Create MariaDB log file
+  file: path=/var/log/mysqld.log state=touch owner=mysql group=mysql mode=0755
+
+- name: Create MariaDB PID directory
+  file: path=/var/run/mysqld state=directory owner=mysql group=mysql mode=0755
+
+- name: Start mariadb
+  service: name=mariadb state=started enabled=yes
+  when: ansible_distribution_major_version == "7"
+
+- name: Start mariadb
+  service: name=mysql state=started enabled=yes
+  when: ansible_distribution_major_version == "6"

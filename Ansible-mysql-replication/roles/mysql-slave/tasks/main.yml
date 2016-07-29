@@ -1,0 +1,27 @@
+---
+
+- name: Create mysql configure file
+  template: src=server.cnf.j2 dest={{ mycnf_pwd }}
+  notify:
+    - restart mariadb
+
+#- name: Change root login_password
+#  shell: /usr/bin/mysqladmin -uroot  password "mysql"
+
+- name: Get Mysql-master Status
+  mysql_replication: mode=getmaster
+  delegate_to: "{{ master_host }}"
+  register: master
+
+#- name: Configure replication on the slave.
+#  mysql_replication:
+#        mode=changemaster
+#        master_host={{ master_host }}
+#        master_user={{ dbuser }}
+#        master_password={{ dbuserpass }}
+#        master_log_file={{ master.File }}
+#        master_log_pos={{ master.Position }}
+
+- name: Start slave
+  mysql_replication:
+        mode=startslave

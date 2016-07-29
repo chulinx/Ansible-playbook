@@ -1,0 +1,32 @@
+---
+
+- name: need install for nginx
+  yum: name={{ item }} state=installed
+  with_items:
+    - gcc
+    - pcre
+    - pcre-devel
+    - openssl
+    - openssl-devel
+    - gd
+    - gd-devel
+    - perl
+    - perl-ExtUtils-Embed
+
+- name: unzip nginx
+  unarchive: src=nginx-1.8.0.tar.gz dest=/usr/local/
+
+- name: make nginx install dir
+  file: path=/usr/local/nginx state=directory mode=0755
+
+- name: config nginx
+  shell: chdir=/usr/local/nginx-1.8.0/ ./configure --prefix=/usr/local/nginx --with-ipv6 --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gzip_static_module --with-http_perl_module --with-ld-opt="-Wl,-E" --http-fastcgi-temp-path=/usr/local/nginx/nginx-fcgi.tmp --http-uwsgi-temp-path=/usr/local/nginx/nginx-uwsgi.tmp --http-scgi-temp-path=/usr/local/nginx/nginx-scgi.tmp && make && make install
+  tags: install
+
+- name: Copy nginx configuration file
+  template: src=nginx.conf.j2 dest=/usr/local/nginx/conf/nginx.conf
+  notify: restart nginx
+
+- name: start nginx
+  shell: /usr/local/nginx/sbin/nginx
+  tags: start

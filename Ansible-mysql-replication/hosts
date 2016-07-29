@@ -1,0 +1,6 @@
+[mysql-master]
+172.17.0.2
+[mysql-slave]
+172.17.0.6
+[mysql-proxy]
+172.17.0.8

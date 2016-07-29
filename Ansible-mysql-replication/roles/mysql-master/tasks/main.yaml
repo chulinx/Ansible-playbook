@@ -1,0 +1,15 @@
+---
+
+- name: Create mysql configure file
+  template: src=server.cnf.j2 dest=/etc/my.cnf.d/server.cnf
+  notify:
+    - restart mariadb
+
+#- name: Change root login_password
+#  shell: /usr/bin/mysqladmin -uroot  password "mysql"
+
+- name: Create Replication User
+  mysql_user: name={{ dbuser }} password={{ dbuserpass }}  priv=*.*:ALL host={{ item }} state=present
+  with_items:
+    - '%'
+    - 'localhost'

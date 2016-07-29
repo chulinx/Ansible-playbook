@@ -1,0 +1,29 @@
+---
+- name: Install unzip
+  yum: name=unzip state=installed
+
+- name: unzip Amobea and Jave Package
+  unarchive: src={{ item }} dest=/usr/local/
+  with_items:
+    - amoeba-mysql-3.0.5-RC-distribution.zip
+    - jdk-7u79-linux-x64.tar.gz
+  tags: unzip
+
+- name: Copy  profile
+  template: src=profile dest=/etc/profile
+  tags: copy
+
+- name: Source profile
+  shell: source /etc/profile
+
+- name: Copy Amoeba Template Configure File
+  template: src={{ item }} dest=/usr/local/amoeba-mysql-3.0.5-RC/conf/
+  with_items:
+    - dbServers.xml
+    - amoeba.xml
+
+- name: Copy Amoeba jvm Configure File
+  template: src=jvm.properties dest=/usr/local/amoeba-mysql-3.0.5-RC/jvm.properties
+
+- name: Start Amoeba
+  shell: /usr/local/amoeba-mysql-3.0.5-RC/bin/launcher &

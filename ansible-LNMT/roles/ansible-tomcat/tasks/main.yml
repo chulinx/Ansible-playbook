@@ -1,0 +1,34 @@
+---
+
+- name: unzip Tomcat and Jave Package
+  unarchive: src={{ item }} dest=/usr/local/
+  with_items:
+    - apache-tomcat-7.0.70.tar.gz
+    - jdk-7u79-linux-x64.tar.gz
+  tags: unzip
+
+- name: Copy  profile
+  template: src=profile dest=/etc/profile
+  tags: copy
+
+- name: Source profile
+  shell: source /etc/profile
+
+- name: Copy Template Configure File
+  template: src={{ item }} dest=/usr/local/apache-tomcat-7.0.70/conf/
+  with_items:
+    - catalina.properties
+    - server.xml
+
+- name: Copy Template catalina.sh File
+  template: src=catalina.sh  dest=/usr/local/apache-tomcat-7.0.70/bin/catalina.sh
+
+- name: Copy Tomcat service
+  template: src=tomcat dest=/etc/init.d/ owner=root group=root mode="u=rwx,g=rx,o=rx"
+
+- name: Add tomcat As a System Service
+  shell: chkconfig --add tomcat
+
+- name: Start Tomcat Service
+  service: name=tomcat state=started
+
