@@ -1,0 +1,9 @@
+---
+- name: Install etcd 
+  yum: name=etcd state=latest
+- name: Copy Config file 
+  template: src=etcd.conf dest=/etc/etcd/ 
+- name: Start etcd 
+  service: name=etcd state=started enabled=yes
+- name: Insert key-value for flannel
+  shell: etcdctl mk /coreos.com/network/config '{"Network":"172.17.0.0/16"}'

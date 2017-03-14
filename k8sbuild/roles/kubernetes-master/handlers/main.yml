@@ -1,0 +1,8 @@
+---
+- name: Restart kubernetes
+  service: name={{ item }} state=restarted enabled=yes
+  with_items:
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-schedule
+

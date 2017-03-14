@@ -1,0 +1,3 @@
+---
+kube_master: --master=http://172.16.1.146:8080
+kube_api_server: --api-servers=http://172.16.1.146:8080

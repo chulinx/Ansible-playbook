@@ -1,0 +1,4 @@
+---
+etcd_listen_client: http://0.0.0.0:2379
+
+etcd_advertise_client: http://127.0.0.1:2379

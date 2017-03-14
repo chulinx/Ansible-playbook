@@ -1,0 +1,24 @@
+---
+- name: Stop Firewalld for centos6
+  service: name=iptables state=stopped enabled=no
+  when: ansible_distribution_major_version == "6"
+- name: Stop Firewalld for centos7
+  service: name=firewalld state=stopped enabled=no
+  when: ansible_distribution_major_version == "7"
+- name: Copy Selinux condig file
+  template: src=selinux dest=/etc/sysconfig/
+- name: Close selinux
+  selinux: state=disabled
+- name: Install some tools
+  yum: name={{ item }} state=latest
+  with_items:
+    - wget
+    - vim
+- name: Down aliyun epel for centos6
+  get_url: url="http://mirrors.aliyun.com/repo/epel-6.repo" dest=/etc/yum.repos.d/epel.repo
+  when: ansible_distribution_major_version == "6" 
+- name: Down aliyun epel for centos7
+  get_url: url="http://mirrors.aliyun.com/repo/epel-7.repo" dest=/etc/yum.repos.d/epel.repo
+  when: ansible_distribution_major_version == "7"
+- name: clear yum cache
+  shell: yum clean all

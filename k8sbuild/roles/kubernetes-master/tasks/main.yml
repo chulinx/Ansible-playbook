@@ -1,0 +1,18 @@
+---
+- name: Install Kubernetes-master
+  yum: name=kubernetes-master state=latest
+- name: Config kubernetes-master
+  template: src={{ item }} dest=/etc/kubernetes/ 
+  with_items:
+    - config
+    - apiserver
+  notify:
+  - Restart kubernetes
+- name: Start kubernetes
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - kube-apiserver
+    - kube-controller-manager
+    - kube-scheduler
+
+

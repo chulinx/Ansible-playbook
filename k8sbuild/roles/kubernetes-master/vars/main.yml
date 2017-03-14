@@ -1,0 +1,5 @@
+#etcd 服务ip 和　端口
+etcdserver_ip_port: 172.16.1.146:2379
+admi_contorl: --admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota
+master_ip_port: --master=http://172.16.1.146:8080
+
