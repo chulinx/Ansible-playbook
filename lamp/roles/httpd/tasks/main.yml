@@ -1,0 +1,8 @@
+- name: Install httpd 
+  yum: name=httpd state=installed 
+- name: copy conffile
+  copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+- name: copy index.php
+  copy: src=index.php dest=/var/www/html/
+  notify: restart httpd
+

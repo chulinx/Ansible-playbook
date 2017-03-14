@@ -1,0 +1,7 @@
+- name: LAMP build
+  remote_user: root
+  hosts: docker
+  roles:
+      - mysql
+      - php
+      - httpd

@@ -1,0 +1,4 @@
+- name Install ntpdate
+  yum: name=ntpdate state=installed
+- name sync time 
+  cron: name="sync time" minute="*/5" job="/usr/sbin/ntpdate 172.17.0.4 >> /dev/null"

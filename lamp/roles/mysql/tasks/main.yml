@@ -1,0 +1,5 @@
+- name: Install mysql mysql-server mysql-devel
+  yum: name=mysql  state=installed
+- name: Start mysql
+  service: name=mysqld state=started
+
